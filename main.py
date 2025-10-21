@@ -33,7 +33,7 @@ def read_image(base64_image):
         "describing the main visible objects. Do not read text."
     )
 
-    return client.responses.create(
+    data_responce = client.responses.create(
         model = settings["Model"],
         reasoning = {"effort": "low"},     # minimize hidden reasoning for speed
         max_output_tokens = 1024,          # big headroom -> no practical cap
@@ -44,7 +44,9 @@ def read_image(base64_image):
                 {"type": "input_image", "image_url": f"data:image/jpeg;base64,{base64_image}"}
             ]
         }],
-    )
+    ).model_dump()
+
+    return data_responce["output"][1]["content"][0]["text"]
 
 
 def main():
