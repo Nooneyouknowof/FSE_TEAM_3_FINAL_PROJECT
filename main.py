@@ -65,11 +65,12 @@ def vibrate(pin_name, t):
     GPIO.output(pin, GPIO.HIGH)
     time.sleep(t)
     GPIO.output(pin, GPIO.LOW)
-
+    time.sleep(t)
 
 def main():
     print("Starting Program")
-    vibrate("GPIO17", 1)
+    while True:
+        vibrate("GPIO17", 1)
     # image = take_picture()
     # image_desc = read_image(image)
     # print(image_desc)
