@@ -20,3 +20,8 @@
     ```bash
     pip install -r requirements.txt
     ```
+
+4. Create the .env file and edit it
+    ```bash
+    cp .env.example .env
+    ```
