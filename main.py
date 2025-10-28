@@ -3,7 +3,7 @@ import sys
 import cv2
 import time
 import base64
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -14,6 +14,7 @@ settings = {
 }
 
 # Apply Settings
+load_dotenv()
 cam = cv2.VideoCapture(0)
 cam.set(cv2.CAP_PROP_FRAME_WIDTH, settings["Resolution"][0])
 cam.set(cv2.CAP_PROP_FRAME_HEIGHT, settings["Resolution"][1])
@@ -58,7 +59,6 @@ def vibrate(time):
 
 def main():
     print("Starting Program")
-    load_dotenv()
 
     image = take_picture()
     image_desc = read_image(image)
