@@ -14,7 +14,7 @@ settings = {
 }
 
 pi_board = {
-    "GPIO17": 11
+    "GPIO17": 17
 }
 
 # Apply Settings
