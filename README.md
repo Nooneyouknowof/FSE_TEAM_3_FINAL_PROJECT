@@ -16,12 +16,22 @@
     code FSE_TEAM_3_FINAL_PROJECT
     ```
 
-3. Install the python dependencies
+3. Create a venv for the project
+    ```bash
+    python -m venv venv
+    ```
+
+3. Activate the virtual environment
+    ```bash
+    source venv/bin/activate
+    ```
+
+5. Install the python dependencies
     ```bash
     pip install -r requirements.txt
     ```
 
-4. Create the .env file and edit it
+6. Create the .env file and edit it
     ```bash
     cp .env.example .env
     ```
