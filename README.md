@@ -35,3 +35,8 @@
     ```bash
     cp .env.example .env
     ```
+
+7. Run the program
+    ```bash
+    python -m main.py
+    ```
