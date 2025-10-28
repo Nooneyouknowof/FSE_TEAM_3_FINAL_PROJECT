@@ -8,7 +8,6 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 settings = {
-    "API": os.getenv("OPEN_AI_KEY"),
     "Model": "gpt-5-nano-2025-08-07",
     "Camera_Index": 0, # The specific Camera you want to use
     "Resolution": [640, 480]
@@ -18,7 +17,8 @@ settings = {
 cam = cv2.VideoCapture(0)
 cam.set(cv2.CAP_PROP_FRAME_WIDTH, settings["Resolution"][0])
 cam.set(cv2.CAP_PROP_FRAME_HEIGHT, settings["Resolution"][1])
-client = OpenAI(api_key=settings["API"])
+print(os.getenv("OPEN_AI_KEY"))
+client = OpenAI(api_key=os.getenv("OPEN_AI_KEY"))
 
 
 def take_picture():
