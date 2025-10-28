@@ -69,7 +69,7 @@ def vibrate(pin_name, t):
 
 def main():
     print("Starting Program")
-    vibrate(1)
+    vibrate("GPIO17", 1)
     # image = take_picture()
     # image_desc = read_image(image)
     # print(image_desc)
