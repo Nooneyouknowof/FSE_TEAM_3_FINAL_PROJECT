@@ -3,7 +3,7 @@ import sys
 import cv2
 import time
 import base64
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -13,8 +13,14 @@ settings = {
     "Resolution": [640, 480]
 }
 
+pi_board = {
+    "GPIO17": 11
+}
+
 # Apply Settings
 load_dotenv()
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(pi_board["GPIO17"], GPIO.OUT) # GPIO17
 cam = cv2.VideoCapture(0)
 cam.set(cv2.CAP_PROP_FRAME_WIDTH, settings["Resolution"][0])
 cam.set(cv2.CAP_PROP_FRAME_HEIGHT, settings["Resolution"][1])
@@ -53,16 +59,20 @@ def read_image(base64_image):
 
     return data_responce["output"][1]["content"][0]["text"]
 
-def vibrate(time):
-    print(time)
+def vibrate(pin_name, t):
+    pin = pi_board[pin_name]
+    print(pin_name, pin)
+    GPIO.output(pin, GPIO.HIGH)
+    time.sleep(t)
+    GPIO.output(pin, GPIO.LOW)
 
 
 def main():
     print("Starting Program")
-
-    image = take_picture()
-    image_desc = read_image(image)
-    print(image_desc)
+    vibrate(1)
+    # image = take_picture()
+    # image_desc = read_image(image)
+    # print(image_desc)
 
 
 if __name__ == "__main__":
