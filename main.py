@@ -1,10 +1,14 @@
+import os
 import sys
 import cv2
+import time
 import base64
+import RPi.GPIO as GPIO
 from openai import OpenAI
+from dotenv import load_dotenv
 
 settings = {
-    "API": "sk-####",
+    "API": os.getenv("OPEN_AI_KEY"),
     "Model": "gpt-5-nano-2025-08-07",
     "Camera_Index": 0, # The specific Camera you want to use
     "Resolution": [640, 480]
@@ -48,9 +52,14 @@ def read_image(base64_image):
 
     return data_responce["output"][1]["content"][0]["text"]
 
+def vibrate(time):
+    print(time)
+
 
 def main():
     print("Starting Program")
+    load_dotenv()
+
     image = take_picture()
     image_desc = read_image(image)
     print(image_desc)
