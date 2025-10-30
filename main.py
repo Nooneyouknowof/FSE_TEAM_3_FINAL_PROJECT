@@ -102,6 +102,8 @@ def main():
     while True:
         distance = check_depth()
         print(distance)
+        if distance < 60:
+            vibrate(1)
         time.sleep(0.3) # Rate of loop
     # image = take_picture()
     # image_desc = read_image(image)
