@@ -32,6 +32,7 @@ cam.set(cv2.CAP_PROP_FRAME_HEIGHT, settings["Resolution"][1])
 print(os.getenv("OPEN_AI_KEY"))
 client = OpenAI(api_key=os.getenv("OPEN_AI_KEY"))
 engine = pyttsx3.init()
+engine.setProperty("volume", 1.0)
 
 def take_picture():
     (img_success, frame) = cam.read() # tuple[bool, MatLike]
