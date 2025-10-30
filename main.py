@@ -14,13 +14,17 @@ settings = {
 }
 
 pi_board = {
-    "GPIO17": 17
+    "GPIO17": 17,
+    "ECHO": 18,
+    "TRIG": 23
 }
 
 # Apply Settings
 load_dotenv()
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(pi_board["GPIO17"], GPIO.OUT) # GPIO17
+GPIO.setup(pi_board["ECHO"], GPIO.IN) # GPIO18
+GPIO.setup(pi_board["TRIG"], GPIO.OUT) # GPIO23
 cam = cv2.VideoCapture(0)
 cam.set(cv2.CAP_PROP_FRAME_WIDTH, settings["Resolution"][0])
 cam.set(cv2.CAP_PROP_FRAME_HEIGHT, settings["Resolution"][1])
@@ -59,7 +63,8 @@ def read_image(base64_image):
 
     return data_responce["output"][1]["content"][0]["text"]
 
-def vibrate(pin_name, t):
+def vibrate(t):
+    pin_name = "GPIO17"
     pin = pi_board[pin_name]
     print(pin_name, pin)
     GPIO.output(pin, GPIO.HIGH)
@@ -67,14 +72,45 @@ def vibrate(pin_name, t):
     GPIO.output(pin, GPIO.LOW)
     time.sleep(t)
 
+def check_depth():
+    print("Checking distance...")
+    echo = pi_board["ECHO"]
+    trig = pi_board["TRIG"]
+    
+    GPIO.output(trig, 0)
+    time.sleep(0.000002)
+
+    GPIO.output(trig, 1)
+    time.sleep(0.00001)
+    GPIO.output(trig, 0)
+
+    while GPIO.input(echo) == 0:
+        a = 0
+    time1 = time.time()
+    while GPIO.input(echo) == 1:
+        a = 1
+    time2 = time.time()
+
+    duration = time2 - time1
+    return duration * 340 / 2 * 100
+
 def main():
     print("Starting Program")
+    for _ in range(2):
+        vibrate(0.1)
+
     while True:
-        vibrate("GPIO17", 1)
+        distance = check_depth()
+        print(distance)
+        time.sleep(0.3) # Rate of loop
     # image = take_picture()
     # image_desc = read_image(image)
     # print(image_desc)
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("Exiting program")
+        GPIO.cleanup()
