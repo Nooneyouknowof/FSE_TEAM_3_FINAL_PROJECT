@@ -34,7 +34,6 @@ client = OpenAI(api_key=os.getenv("OPEN_AI_KEY"))
 
 def take_picture():
     (img_success, frame) = cam.read() # tuple[bool, MatLike]
-    cam.release()
     if img_success:
         _, buffer = cv2.imencode('.jpg', frame)
         return base64.b64encode(buffer).decode('utf-8')
@@ -114,3 +113,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Exiting program")
         GPIO.cleanup()
+        cam.release()
