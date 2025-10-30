@@ -3,6 +3,7 @@ import sys
 import cv2
 import time
 import base64
+import pyttsx3
 import RPi.GPIO as GPIO
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -30,7 +31,7 @@ cam.set(cv2.CAP_PROP_FRAME_WIDTH, settings["Resolution"][0])
 cam.set(cv2.CAP_PROP_FRAME_HEIGHT, settings["Resolution"][1])
 print(os.getenv("OPEN_AI_KEY"))
 client = OpenAI(api_key=os.getenv("OPEN_AI_KEY"))
-
+engine = pyttsx3.init()
 
 def take_picture():
     (img_success, frame) = cam.read() # tuple[bool, MatLike]
@@ -39,7 +40,6 @@ def take_picture():
         return base64.b64encode(buffer).decode('utf-8')
     else:
         print("Error: The camera failed to read?", file=sys.stderr)
-
 
 def read_image(base64_image):
     System_prompt = (
@@ -98,12 +98,13 @@ def main():
 
     while True:
         distance = check_depth()
-        print(distance)
         if distance < 60:
             image = take_picture()
             vibrate(1)
             image_desc = read_image(image)
+            engine.say(image_desc)
             print(image_desc)
+            engine.runAndWait()
         time.sleep(0.3) # Rate of loop
 
 
