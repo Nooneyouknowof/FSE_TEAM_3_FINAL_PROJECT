@@ -66,14 +66,12 @@ def read_image(base64_image):
 def vibrate(t):
     pin_name = "GPIO17"
     pin = pi_board[pin_name]
-    print(pin_name, pin)
     GPIO.output(pin, GPIO.HIGH)
     time.sleep(t)
     GPIO.output(pin, GPIO.LOW)
     time.sleep(t)
 
 def check_depth():
-    print("Checking distance...")
     echo = pi_board["ECHO"]
     trig = pi_board["TRIG"]
     
@@ -103,11 +101,11 @@ def main():
         distance = check_depth()
         print(distance)
         if distance < 60:
+            image = take_picture()
             vibrate(1)
+            image_desc = read_image(image)
+            print(image_desc)
         time.sleep(0.3) # Rate of loop
-    # image = take_picture()
-    # image_desc = read_image(image)
-    # print(image_desc)
 
 
 if __name__ == "__main__":
