@@ -31,12 +31,17 @@
     pip install -r requirements.txt
     ```
 
-6. Create the .env file and edit it
+6. Install linux package "eSpeak-NG"
+    ```bash
+    sudo apt install espeak-ng
+    ```
+
+7. Create the .env file and edit it
     ```bash
     cp .env.example .env
     ```
 
-7. Run the program
+8. Run the program
     ```bash
     python -m main.py
     ```
