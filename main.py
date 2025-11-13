@@ -25,6 +25,7 @@ pi_board = {
 load_dotenv()
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(pi_board["GPIO17"], GPIO.OUT) # GPIO17
+GPIO.setup(pi_board["GPIO27"], GPIO.OUT) # GPIO27
 GPIO.setup(pi_board["ECHO"], GPIO.IN) # GPIO18
 GPIO.setup(pi_board["TRIG"], GPIO.OUT) # GPIO23
 cam = cv2.VideoCapture(0)
