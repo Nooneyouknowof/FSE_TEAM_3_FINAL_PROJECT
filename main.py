@@ -16,6 +16,7 @@ settings = {
 
 pi_board = {
     "GPIO17": 17,
+    "GPIO27": 27,
     "ECHO": 18,
     "TRIG": 23
 }
@@ -64,11 +65,15 @@ def read_image(base64_image):
     return data_responce["output"][1]["content"][0]["text"]
 
 def vibrate(t):
-    pin_name = "GPIO17"
-    pin = pi_board[pin_name]
-    GPIO.output(pin, GPIO.HIGH)
+    pin_name1 = "GPIO17"
+    pin_name2 = "GPIO27"
+    pin1 = pi_board[pin_name1]
+    pin2 = pi_board[pin_name2]
+    GPIO.output(pin1, GPIO.HIGH)
+    GPIO.output(pin2, GPIO.HIGH)
     time.sleep(t)
-    GPIO.output(pin, GPIO.LOW)
+    GPIO.output(pin1, GPIO.LOW)
+    GPIO.output(pin2, GPIO.LOW)
     time.sleep(t)
 
 def check_depth():
